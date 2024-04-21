@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
+    <!-- MDB -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
+    <div class="container">
+        <!-- Navbar brand -->
+        <a class="navbar-brand mt-2 mt-sm-0" href="https://mdbootstrap.com/">
+            <!-- <img
+                src=""
+                height="20"
+                alt="MDB Logo"
+                loading="lazy"
+            /> -->
+        </a>
+        <!-- Toggle button -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-mdb-toggle="collapse"
+            data-mdb-target="#navbarSupportedContent1"
+            aria-controls="navbarSupportedContent1"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Free download</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Free tutorials</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+
+            <!-- Profile image and link -->
+            <div class="d-flex align-items-center" style="border-radius: 50%;">
+                <img src="{{request.user.profile.profile_image.url}}" alt="Profile Image" class="rounded-circle me-2" style="width: 40px; border-radius: 50%;">
+                <a href="/profile/" class="nav-link text-black">{{user.username}}</a>
+            </div>
+        </div>
+        <!-- Mode toggle button with icon -->
+<!-- <button class="btn btn-dark ms-auto dark-mode" id="modeToggle">
+  <i class="fas fa-moon"></i> Dark Mode
+</button> -->
+
+        <!-- Collapsible wrapper -->
+    </div>
+</nav>
+
+
+
+
+
+{% block start %}
+
+{% endblock %}
+
+<!-- Main content -->
+<div class="container mt-5">
+    <!-- Your main content goes here -->
+</div>
+
+<footer class="text-center text-white mt-4" style="background-color: #607D8B">
+    <!-- Footer content -->
+</footer>
+
+<!-- Bootstrap and MDB JavaScript files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'js/mdb.umd.min.js' %}"></script>
+<!-- Custom scripts -->
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+<script>
+  // Function to toggle mode icon and text
+function toggleMode() {
+    // Check if body has 'dark-mode' class
+    if (document.body.classList.contains('dark-mode')) {
+        // Remove 'dark-mode' class from body
+        document.body.classList.remove('dark-mode');
+        // Update button text to 'Dark Mode' and icon to 'moon'
+        document.getElementById('modeToggle').innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+    } else {
+        // Add 'dark-mode' class to body
+        document.body.classList.add('dark-mode');
+        // Update button text to 'Light Mode' and icon to 'sun'
+        document.getElementById('modeToggle').innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+    }
+}
+
+</script>
+</body>
+</html>
