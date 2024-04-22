@@ -12,7 +12,9 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-# from .seed import *
+from .seed import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+# from django.db.models import Q
 from django.conf import settings
 # from .utils import send_email_with_attachment 
 
@@ -21,20 +23,36 @@ from django.conf import settings
 
 @login_required(login_url ="/login/")
 def index(request):
-    context = {'products': Product.objects.all()}
-    print(context)
+    context = {}
+    all_products = Product.objects.all()
+
+    # Pagination
+    paginator = Paginator(all_products, 25)  # 10 products per page
+    page = request.GET.get('page')
+
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        products = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range, deliver last page of results.
+        products = paginator.page(paginator.num_pages)
+
+    context['products'] = products
+
     if 'search' in request.GET:
         search_query = request.GET.get('search')
         print("Search query:", search_query)  # Debug message
-        context['products'] = Product.objects.filter(
-            Q(Product_name__icontains=search_query) |
-            Q(Product_price__icontains=search_query) |
-            Q(Product_discription__icontains=search_query) |
-            Q(Color_variant__color_name__icontains=search_query)  # Assuming Color_variant is a ForeignKey field
+        context['search_query'] = search_query  # Pass search query to template
+        context['products'] = all_products.filter(
+            Q(name__icontains=search_query) |
+            Q(price__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(color_variant__color_name__icontains=search_query)  # Assuming Color_variant is a ForeignKey field
         ).distinct()
-        print("Filtered products:", context['products'])  # Debug message
-    return render(request, 'index.html', context)
 
+    return render(request, 'index.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -84,7 +102,7 @@ def login_page(request):
      
             else :
                 login(request,user)
-                return redirect('/index/')
+                return redirect('/home/')
         # return render(request, 'login.html')
     return render(request,'login.html')
 

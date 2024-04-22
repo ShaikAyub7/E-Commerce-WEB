@@ -92,29 +92,17 @@
 <footer class="text-center text-white mt-4" style="background-color: #607D8B">
     <!-- Footer content -->
 </footer>
+<!-- Bootstrap bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- MDB -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js" integrity="sha512-4RmBlIX3HgmNQroPm9RtkHJZ9UhlshCnpCfBRCIGw7d6WfVQU4RuzR0VpDQD7UzCH4w9Z8eRD3GB5wA2yPzG5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- Bootstrap and MDB JavaScript files -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{% static 'js/mdb.umd.min.js' %}"></script>
 <!-- Custom scripts -->
-<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
-<script>
-  // Function to toggle mode icon and text
-function toggleMode() {
-    // Check if body has 'dark-mode' class
-    if (document.body.classList.contains('dark-mode')) {
-        // Remove 'dark-mode' class from body
-        document.body.classList.remove('dark-mode');
-        // Update button text to 'Dark Mode' and icon to 'moon'
-        document.getElementById('modeToggle').innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
-    } else {
-        // Add 'dark-mode' class to body
-        document.body.classList.add('dark-mode');
-        // Update button text to 'Light Mode' and icon to 'sun'
-        document.getElementById('modeToggle').innerHTML = '<i class="fas fa-sun"></i> Light Mode';
-    }
-}
+<!-- <script type="text/javascript" src="{% static 'js/custom.js' %}"></script> -->
+<script src="{% static 'js/script.js' %}"></script>
 
-</script>
 </body>
 </html>

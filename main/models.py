@@ -4,6 +4,9 @@ import uuid
 import datetime
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.crypto import get_random_string
+from faker import Faker
+fake = Faker
 
 class BaseModel(models.Model):
     uid = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
@@ -47,6 +50,25 @@ class sizeVariant(BaseModel):
 class Product(BaseModel):
     Product_name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, null=True, blank=True)
+    image_url = models.URLField(blank=True)  # Field for image URL
+
+    # def save(self, *args, **kwargs):
+    #     if not self.slug:
+    #         base_slug = slugify(self.name)
+    #         slug = base_slug
+    #         counter = 1
+    #         while Product.objects.filter(slug=slug).exists():
+    #             slug = f"{base_slug}-{counter}"
+    #             counter += 1
+    #         self.slug = slug
+
+    #     # Generate a fake image URL if not provided
+    #     if not self.image_url:
+    #         self.image_url = fake.image_url()
+
+    #     super().save(*args, **kwargs)
+
+    #     super().save(*args, **kwargs)
     Product_price = models.IntegerField(default=0)
     Category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='Products')
     Product_discription = models.TextField()

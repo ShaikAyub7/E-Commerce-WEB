@@ -2,20 +2,55 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f3f6f8;
     margin: 0;
+  
     padding: 0;
     padding-top: 50px;
 }
 
 .main {
     display: flex;
+    max-width: 80vw; /* Change width to 90vw */
+    justify-content: center;
+    align-items: center;
     gap: 50px;
     margin-top: 30px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f6f8;
+    margin: 0;
+    padding: 0;
+    padding-top: 50px;
+}
+
+.container {
+    max-width: 80vw; /* Set max-width to center the content */
+    margin: auto; /* Center the container */
+}
+
+.main {
+    position: absolute; /* Position the section absolutely */
+    top: 50%; /* Move the top of the section to the middle of the viewport */
+    left: 50%; /* Move the left side of the section to the middle of the viewport */
+    transform: translate(-50%, -50%); /* Adjust to center the section perfectly */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 30px;
+    width: 90vw; /* Set the width of the section */
 }
 
 .containerProfile {
     padding: 20px;
     border-radius: 10px;
     width: 50%;
+}
+
+
+
+.form-control-file {
+    border: none;
 }
 
 .profile-card {
@@ -47,6 +82,7 @@ body {
     margin-top: 20px;
     margin-right: 5px;
     padding: 10px 10px 10px 20px;
+    border-radius: 20px;
 }
 
 .form input {
@@ -148,7 +184,6 @@ body {
 }
 
 .custom-file-input {
-    border: 1px solid black;
     border-bottom: 2px solid #ccc;
     background-color: transparent;
     border-radius: 0;
@@ -159,19 +194,6 @@ body {
 .custom-file-input:focus {
     border-bottom-color: #007bff;
     box-shadow: none;
-}
-
-.form-control-file {
-    border: 1px solid black;
-    display: block;
-    display: flex;
-    margin-left: 0px;
-}
-
-.back {
-    position: fixed;
-    bottom: 50px;
-    left: 20px;
 }
 
 .custom-form-control {
@@ -194,11 +216,11 @@ body {
     overflow-y: scroll;
     padding: 20px;
 }
-.yes{
+
+.yes {
     color: white;
     padding: 10px;
     font-size: 1rem;
     margin-top: 20px;
     background:#007bff;
-    /* border-radius: 50%; */
 }

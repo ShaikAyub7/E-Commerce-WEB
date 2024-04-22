@@ -7,7 +7,9 @@
 
 <div class="containerProfile container">
     <div class="profile-card">
-        <img src="{{ request.user.profile.profile_image.url }}" class="profile-image img-thumbnail" alt="Profile Image">
+        <a href="http://127.0.0.1:8000/media/profile/1713687488456_UkJb6cq.jpg">
+            <img src="{{ request.user.profile.profile_image.url }}" class="profile-image img-thumbnail" alt="Profile Image">
+        </a>
         <h2>{{ request.user.username }}</h2>
         <div class="user-info">
             <p>Email: {{ request.user.email }}</p>
