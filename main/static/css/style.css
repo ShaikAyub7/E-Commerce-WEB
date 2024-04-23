@@ -98,6 +98,14 @@ body {
 .profile-image {
     width: 150px;
     height: 150px;
+     border-radius: 50%;
+    border: 3px solid rgb(197, 190, 190);
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+.profile-image img{
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     border: 3px solid rgb(197, 190, 190);
     transition: transform 0.3s ease-in-out;
@@ -224,3 +232,7 @@ body {
     margin-top: 20px;
     background:#007bff;
 }
+/* .profile img{
+    width: 30px;
+    height: 30px;
+} */

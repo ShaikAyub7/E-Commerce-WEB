@@ -18,10 +18,10 @@ class BaseModel(models.Model):
 
 class Category(BaseModel):
     Category_name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, null=True, blank=True)
-    Category_price = models.IntegerField(default=0)
-    Category_discription = models.TextField()
-    banner = models.ImageField(upload_to='category_banners', default='default_banner.jpg')
+    # slug = models.SlugField(unique=True, null=True, blank=True)
+    # Category_price = models.IntegerField(default=0)
+    # Category_discription = models.TextField()
+    # banner = models.ImageField(upload_to='category_banners', default='default_banner.jpg')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.Category_name)
@@ -86,16 +86,16 @@ class Product(BaseModel):
 class ProductImage(BaseModel):
     Product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='Product_image')
     image = models.ImageField(upload_to="Product")
-    banner = models.ImageField(upload_to='banner_images', default='default_banner.jpg')
+    banner = models.ImageField(upload_to='banner_images', default='')
 
 class Profile(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     is_email_verified = models.BooleanField(default=True)
     email_token = models.CharField(max_length=100, null=True, blank=True)
-    profile_image = models.ImageField(upload_to="profile",default=False)
+    profile_image = models.ImageField(upload_to="profile",default= 'profile/profile-default.jpg')
     location = models.TextField(default=False)
     occupation = models.TextField(default=False)
-    phone_number = models.IntegerField(null=True)
+    phone_number = models.IntegerField(null=True ,default=True)
 
 
     def __str__(self) -> str:

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block start %}
    <!-- Navbar -->
@@ -28,13 +29,32 @@
       data-mdb-slide-to="2"
       aria-label="Slide 3"
     ></button>
+    <button
+      type="button"
+      data-mdb-target="#carouselExampleCaptions"
+      data-mdb-slide-to="3"
+      aria-label="Slide 4"
+    ></button>
+
+    <button
+    type="button"
+    data-mdb-target="#carouselExampleCaptions"
+    data-mdb-slide-to="4"
+    aria-label="Slide 5"
+  ></button>
+  <button
+      type="button"
+      data-mdb-target="#carouselExampleCaptions"
+      data-mdb-slide-to="5"
+      aria-label="Slide 6"
+    ></button>
   </div>
-  <div class="carousel-inner">
+  <div class="carousel-inner" style="margin-top: 50px;">
     <div class="carousel-item active">
-      <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%283%29.jpg" class="d-block w-100" alt="Wild Landscape"/>
-      <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
+      <img src="{% static 'media/images/flipkart.webp' %}" class="d-block w-100" alt="Wild Landscape" />
+      <!-- <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div> -->
       <div class="carousel-caption d-none d-sm-block mb-5">
-        <h1 class="mb-4">
+        <!-- <h1 class="mb-4">
                 <strong>welcome to e-commerce</strong>
               </h1>
 
@@ -48,54 +68,57 @@
 
               <a target="_blank" href="#" class="btn btn-outline-white btn-lg">Let's Start
                 <i class="fas fa-graduation-cap ms-2"></i>
-              </a>
+              </a> -->
       </div>
     </div>
-    <div class="carousel-item">
-      <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%283%29.jpg" class="d-block w-100" alt="Camera"/>
-      <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
+    <div class="carousel-item ">
+      <img src="{% static 'media/images/flipkart2.webp' %}" class="d-block w-100" alt="Camera"/>
+      <!-- <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div> -->
       <div class="carousel-caption d-none d-md-block mb-5">
-        <h1 class="mb-4">
-                <strong>Learn Bootstrap 5 with MDB</strong>
-              </h1>
-
-              <p>
-                <strong>Best & free guide of responsive web design</strong>
-              </p>
-
-              <p class="mb-4 d-none d-md-block">
-                <strong>The most comprehensive tutorial for the Bootstrap 5. Loved by over 3 000 000 users. Video and written versions
-                  available. Create your own, stunning website.</strong>
-              </p>
-
-              <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start free tutorial
-                <i class="fas fa-graduation-cap ms-2"></i>
-              </a>
+       
       </div>
     </div>
-    <div class="carousel-item">
-      <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%285%29.jpg" class="d-block w-100" alt="Exotic Fruits"/>
-      <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
+    <div class="carousel-item ">
+      <img src="{% static 'media/images/flipkart3.webp' %}" class="d-block w-100" alt="Exotic Fruits"/>
+      <!-- <div class="mask" ></div> -->
       <div class="carousel-caption d-none d-md-block mb-5">
-        <h1 class="mb-4">
-                <strong>Learn Bootstrap 5 with MDB</strong>
-              </h1>
-
-              <p>
-                <strong>Best & free guide of responsive web design</strong>
-              </p>
-
-              <p class="mb-4 d-none d-md-block">
-                <strong>The most comprehensive tutorial for the Bootstrap 5. Loved by over 3 000 000 users. Video and written versions
-                  available. Create your own, stunning website.</strong>
-              </p>
-
-              <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start free tutorial
-                <i class="fas fa-graduation-cap ms-2"></i>
-              </a>
+       
       </div>
     </div>
-  </div>
+    
+
+    <div class="carousel-item ">
+      <img src="{% static 'media/images/flipkart4.webp' %}" class="d-block w-100" alt="Exotic Fruits"/>
+      <!-- <div class="mask" ></div> -->
+      <div class="carousel-caption d-none d-md-block mb-5">
+       
+      </div>
+    </div>
+
+    <div class="carousel-item ">
+      <img src="{% static 'media/images/flipkart5.webp' %}" class="d-block w-100" alt="Exotic Fruits"/>
+      <!-- <div class="mask" ></div> -->
+      <div class="carousel-caption d-none d-md-block mb-5">
+       
+      </div>
+    </div>
+    <div class="carousel-item ">
+      <img src="{% static 'media/images/flipkart6.webp' %}" class="d-block w-100" alt="Exotic Fruits"/>
+      <!-- <div class="mask" ></div> -->
+      <div class="carousel-caption d-none d-md-block mb-5">
+       
+      </div>
+    </div>
+    <!-- Add more carousel items here -->
+    
+    <!-- Fourth Slide -->
+    
+    </div>
+    <!-- Fifth Slide -->
+
+    <!-- Repeat the pattern for more images -->
+  
+  
   <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleCaptions" data-mdb-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -109,72 +132,70 @@
 
  <!--Main layout-->
 <main>
-<div class="container">
+<div class="container" >
   <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark mt-3 mb-5 shadow p-2" style="background-color: #607D8B">
-  <!-- Container wrapper -->
-  <div class="container-fluid">
-
-    <!-- Navbar brand -->
-    <a class="navbar-brand" href="#">Categories:</a>
-
-    <!-- Toggle button -->
-    <button 
-       class="navbar-toggler" 
-       type="button" 
-       data-mdb-toggle="collapse" 
-       data-mdb-target="#navbarSupportedContent2" 
-       aria-controls="navbarSupportedContent2" 
-       aria-expanded="false" 
-       aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent2">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-        <!-- Link -->
-        <li class="nav-item acitve">
-          <a class="nav-link text-white" href="#">All</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'product.html' slug='shirt' %}">Shirts</a>
-        </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Sport wears</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Outwears</a>
-            </li>
-            <form action="">
-
-              <li><button class="nav-link text-white">Refresh</button></li>
-
-            </form>
-      </ul>
-
-      <!-- Search -->
-      <form class="w-auto py-1"    style="max-width: 12rem ; width: 100%;">
-      {% csrf_token %}
-
-        <input type="search" class="form-control rounded-0" placeholder="Search" aria-label="Search" name="search">
-        
-      </form>
-
+  <nav class="navbar navbar-expand-lg  mt-3 mb-5 shadow p-2" style="background-color:  #b6e7ff; position: sticky; top: 65px; z-index: 9999;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+  
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="#">Categories:</a>
+  
+      <!-- Toggle button -->
+      <button 
+         class="navbar-toggler" 
+         type="button" 
+         data-mdb-toggle="collapse" 
+         data-mdb-target="#navbarSupportedContent2" 
+         aria-controls="navbarSupportedContent2" 
+         aria-expanded="false" 
+         aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="color: black;">
+  
+          <!-- Link -->
+          <li class="nav-item active">
+            <a class="nav-link" href="#">All</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'product.html' slug='shirt' %}">Shirts</a>
+          </li>
+          <li class="nav-item">
+           
+            <a class="nav-link" href="#">Outwears</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Outwears</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link">Refresh</button>
+          </li>
+        </ul>
+  
+        <!-- Search -->
+        <form class="w-auto py-1" style="max-width: 12rem; width: 100%; ">
+          {% csrf_token %}
+          <input type="search" class="form-control rounded-0" placeholder="Search" aria-label="Search" name="search" >
+        </form>
+  
+      </div>
     </div>
-  </div>
-  <!-- Container wrapper -->
-</nav>
+    <!-- Container wrapper -->
+  </nav>
+  
 <!-- Navbar -->
   
 <!-- Products -->
 <section class="d-flex flex-wrap justify-content-start">
   {% for product in products %}
     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <div class="card mb-3 px-3 ml-3" style="margin-right: 10px; height: 90%;">
-        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
-          <img src="/media/{{ product.Product_image.first.image }}" class="w-100 h-100" />
+      <div class="card mb-3 px-3 ml-3" style="margin-right: 10px; height: 500px; max-height:500px;">
+        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light" style="height: 70%; object-fit: cover;">
+          <img src="/media/{{ product.Product_image.first.image }}" class="w-70 h-100" style="object-fit: cover;" />
           <a href="{% url 'product.html' product.slug %}">
             <div class="mask">
               <div class="d-flex justify-content-start align-items-end h-100">

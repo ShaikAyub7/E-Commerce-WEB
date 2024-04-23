@@ -16,10 +16,9 @@
 // const carousel = document.querySelector('#carouselExampleCaptions');
 // const carouselInstance = new mdb.Carousel(carousel);
  // Initialize Bootstrap Carousel
-const carousel = document.querySelector('#carouselExampleCaptions');
-  const carouselInstance = new mdb.Carousel(carousel, {
-    ride: true, // Autoplay the carousel
-    interval: 5000, // Delay between slides in milliseconds
-    pause: 'hover', // Pause the carousel on mouse hover
-    wrap: true // Wrap around the carousel when reaching the last slide
-  });
+// Initialize carousel component
+const carousel = document.getElementById('carouselExampleCaptions');
+const carouselInstance = new mdb.Carousel(carousel, {
+  ride: true, // Auto slide
+  interval: 5000 // Interval between slides (in milliseconds)
+});

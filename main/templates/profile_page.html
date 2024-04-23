@@ -1,59 +1,53 @@
 {% extends 'base.html' %}
-
-
-{% block start%}
+{% load static %}
+{% block start %}
 <section class="main">
+    <div class="containerProfile container">
+        <div class="profile-card">
+            {% if request.user.profile.profile_image %}
+            <img src="{{ request.user.profile.profile_image.url }}" class="profile-image" alt="Profile Image">
+            {% else %}
+            <img src="{% static 'media/images/profile/profile-default.jpg'%}" class="profile-image" alt="Profile Image">
 
-
-<div class="containerProfile container">
-    <div class="profile-card">
-        <a href="http://127.0.0.1:8000/media/profile/1713687488456_UkJb6cq.jpg">
-            <img src="{{ request.user.profile.profile_image.url }}" class="profile-image img-thumbnail" alt="Profile Image">
-        </a>
-        <h2>{{ request.user.username }}</h2>
-        <div class="user-info">
-            <p>Email: {{ request.user.email }}</p>
-            <p>Location: {{ request.user.profile.location }}</p>
-            <p>Occupation: {{ request.user.profile.occupation }}</p>
-            <p>Mobile: {{ request.user.profile.phone_number }}</p>
+            {% endif %}
+            <h2>{{ request.user.username }}</h2>
+            <div class="user-info">
+                <p>Email: {{ request.user.email }}</p>
+                <p>Location: {{ request.user.profile.location }}</p>
+                <p>Occupation: {{ request.user.profile.occupation }}</p>
+                <p>Mobile: {{ request.user.profile.phone_number }}</p>
+            </div>
+        </div>
+        <div class="skills-section">
+            <h3 class="skills-title">Skills</h3>
+            <ul class="skills-list">
+                <li>Web Development</li>
+                <li>UI/UX Design</li>
+                <li>Digital Marketing</li>
+                <li>Content Writing</li>
+            </ul>
         </div>
     </div>
-    <div class="skills-section">
-        <h3 class="skills-title">Skills</h3>
-        <ul class="skills-list">
-            <li>Web Development</li>
-            <li>UI/UX Design</li>
-            <li>Digital Marketing</li>
-            <li>Content Writing</li>
-        </ul>
+
+    <div class="section-2">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {% if messages %}
+            <div class="error-message">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {{ form.as_p }}
+            <button class="btn yes" type="submit">Edit Profile</button>
+        </form>
     </div>
-
-    <!-- <button class="edit-profile-btn btn mt-4 yes" type="submit"><a href="/edit_profile/">Edit Profile</a></button> -->
-</div>
-
-<div class="section-2" >
-   <form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <button class="btn yes" type="submit">Edit Profile</button>
-
-   </form>
-
-
-
-</div>
 </section>
 
-    <a href="/home/" class="back-btn"><i class="fa-solid fa-left-long" style="color: #ffffff;"></i></a>
-
-
-
-
-
-
+<a href="/home/" class="back-btn"><i class="fa-solid fa-left-long" style="color: #ffffff;"></i></a>
 {% endblock %}
-
-
-
-
