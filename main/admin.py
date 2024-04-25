@@ -11,6 +11,7 @@ admin.site.register(Category)
 
 class ProductImageAdmin(admin.StackedInline):
     model = ProductImage
+    
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['Product_name', 'Product_price']  # Replace with actual attributes of your Product model

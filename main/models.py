@@ -83,10 +83,14 @@ class Product(BaseModel):
     def __str__(self):
         return self.Product_name
 
+
 class ProductImage(BaseModel):
     Product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='Product_image')
-    image = models.ImageField(upload_to="Product")
-    banner = models.ImageField(upload_to='banner_images', default='')
+    image = models.ImageField(upload_to="Product", default='true')
+
+    def __str__(self):
+        return f"Image for {self.Product}"
+
 
 class Profile(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')

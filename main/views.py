@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .models import Product
+import random
+import requests
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -13,21 +15,29 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from .seed import *
+# from .fake_store import fetch_fake_store_data  # Assuming your fake_store module is in the same directory as views.py
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # from django.db.models import Q
 from django.conf import settings
 # from .utils import send_email_with_attachment 
 
+fake = Faker()
 
 # Create your views here.
-
 @login_required(login_url ="/login/")
+
+
 def index(request):
     context = {}
-    all_products = Product.objects.all()
+    
+    # Determine whether to fetch real or fake data based on a query parameter
+    if 'fake' in request.GET:
+        all_products = generate_fake_data()  # Fetch fake data
+    else:
+        all_products = Product.objects.all()  # Fetch real data
 
     # Pagination
-    paginator = Paginator(all_products, 25)  # 10 products per page
+    paginator = Paginator(all_products, 25)  # 25 products per page
     page = request.GET.get('page')
 
     try:
@@ -39,21 +49,28 @@ def index(request):
         # If page is out of range, deliver last page of results.
         products = paginator.page(paginator.num_pages)
 
+    # Pass product images to the context
     context['products'] = products
+    context['product_images'] = ProductImage.objects.all()  # Assuming all images are stored in ProductImage model
 
     if 'search' in request.GET:
         search_query = request.GET.get('search')
         print("Search query:", search_query)  # Debug message
         context['search_query'] = search_query  # Pass search query to template
-        context['products'] = all_products.filter(
-            Q(name__icontains=search_query) |
-            Q(price__icontains=search_query) |
-            Q(description__icontains=search_query) |
-            Q(color_variant__color_name__icontains=search_query)  # Assuming Color_variant is a ForeignKey field
+        search_results = all_products.filter(
+            Q(Product_name__icontains=search_query) |
+            Q(Product_price__icontains=search_query) |
+            Q(Product_discription__icontains=search_query)
+            # Assuming Color_variant is a ForeignKey field
         ).distinct()
 
-    return render(request, 'index.html', context)
+        if search_results.exists():
+            context['products'] = search_results
+        else:
+            # If no results found, display an error message
+            messages.error(request, f"No products found matching '{search_query}'.")
 
+    return render(request, 'index.html', context)
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -123,7 +140,9 @@ def profile_page(request):
             if new_username != user.username:  # Ensure it's a different username
                 # Check if the new username is unique
                 if User.objects.filter(username=new_username).exists():
-                    messages.error(request, "This username is already taken. Please choose a different username.")
+                    # messages.error(request, "This username is already taken. Please choose a different username.")
+                    messages.error(request, f"This '{new_username}' username is already taken. Please choose a different username .")
+
                     return redirect('/profile/')  # Redirect back to the profile page with an error message
 
                 # If the new username is unique, update the user's username
@@ -138,14 +157,16 @@ def profile_page(request):
 
     return render(request, 'profile_page.html', {'form': form})
 # @login_required(login_url ="/login/")
+from django.shortcuts import get_object_or_404
+
 def product(request, slug):
     try:
-        product = Product.objects.get(slug=slug)
-        print(Product)
+        product = get_object_or_404(Product, slug=slug)
         return render(request, 'product.html', context={'product': product})
     except Exception as e:
         print(e)
-        return render(request, 'product.html') 
-    
+        # Provide a default context even in the exception case
+        return render(request, 'product.html', context={'product': None})
+
 
 

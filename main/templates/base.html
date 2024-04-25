@@ -9,11 +9,11 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Material Design for Bootstrap</title>
+    <title>E-Commerce</title>
     <!-- MDB icon -->
     <link
       rel="icon"
-      href="{% static 'img/mdb-favicon.ico' %}"
+      href="{% static 'img/icons8-cart-48.png' %}"
       type="image/x-icon"
     />
     <!-- Font Awesome -->
@@ -93,8 +93,35 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Social Media</a>
             </li>
+
+
+
+         
+            <form class="form-inline my-2 my-lg-0 mr-auto mt-1">
+              <input class="form-control mr-sm-2 d-flex  mt-1" type="search" placeholder="Search" aria-label="Search" name="search" style="width: 150%; border-radius: 20px; margin-left: 50%;">
+              <!-- Error message -->
+            </form>
+            <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+            <div class="error-message ml-3" style="position: absolute; top: 105%;left:35%;">
+              {% if messages %}
+                <div class="alert alert-danger" role="alert">
+                  {% for message in messages %}
+                    {{ message }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+  
+            </div>
+
           </ul>
+  
+
+
+               
           <!-- Left links -->
+      
+
 
           <!-- Profile image and link -->
           <div class="d-flex align-items-center" style="border-radius: 50%">
@@ -102,9 +129,9 @@
               src="{{request.user.profile.profile_image.url}}"
               alt="Profile Image"
               class="rounded-circle me-2"
-              style="width: 40px; height: 40px; border-radius: 50%"
+              style="width: 40px; height: 40px; border-radius: 50%; margin-right: 5px;"
             />
-            <a href="/profile/" class="nav-link text-black"
+            <a href="/profile/" class="nav-link text-black" style="padding: 0px;"
               >{{user.username}}</a
             >
           </div>

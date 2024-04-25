@@ -48,6 +48,12 @@
       data-mdb-slide-to="5"
       aria-label="Slide 6"
     ></button>
+    <button
+      type="button"
+      data-mdb-target="#carouselExampleCaptions"
+      data-mdb-slide-to="6"
+      aria-label="Slide 7"
+    ></button>
   </div>
   <div class="carousel-inner" style="margin-top: 50px;">
     <div class="carousel-item active">
@@ -109,6 +115,14 @@
        
       </div>
     </div>
+
+    <div class="carousel-item ">
+      <img src="{% static 'media/images/flipkart7.webp' %}" class="d-block w-100" alt="Exotic Fruits"/>
+      <!-- <div class="mask" ></div> -->
+      <div class="carousel-caption d-none d-md-block mb-5">
+       
+      </div>
+    </div>
     <!-- Add more carousel items here -->
     
     <!-- Fourth Slide -->
@@ -162,7 +176,7 @@
             <a class="nav-link" href="#">All</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'product.html' slug='shirt' %}">Shirts</a>
+            <a class="nav-link" href="{% url 'product' slug='shirt' %}">Shirts</a>
           </li>
           <li class="nav-item">
            
@@ -172,16 +186,37 @@
             <a class="nav-link" href="#">Outwears</a>
           </li>
           <li class="nav-item">
+
+            <form action="" >
+          
+
             <button class="nav-link">Refresh</button>
+          </form>
           </li>
+          <li><a href="?fake=1">Load Fake Data</a>
+          </li>
+
         </ul>
   
         <!-- Search -->
-        <form class="w-auto py-1" style="max-width: 12rem; width: 100%; ">
-          {% csrf_token %}
-          <input type="search" class="form-control rounded-0" placeholder="Search" aria-label="Search" name="search" >
-        </form>
-  
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-fullscreen-sm-down" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p id="errorMessage"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Search form -->
+     
       </div>
     </div>
     <!-- Container wrapper -->
@@ -192,34 +227,42 @@
 <!-- Products -->
 <section class="d-flex flex-wrap justify-content-start">
   {% for product in products %}
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <div class="card mb-3 px-3 ml-3" style="margin-right: 10px; height: 500px; max-height:500px;">
-        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light" style="height: 70%; object-fit: cover;">
-          <img src="/media/{{ product.Product_image.first.image }}" class="w-70 h-100" style="object-fit: cover;" />
-          <a href="{% url 'product.html' product.slug %}">
-            <div class="mask">
-              <div class="d-flex justify-content-start align-items-end h-100">
-                <h5><span class="badge bg-dark ms-2">NEW</span></h5>
+    {% if product.slug %}
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card mb-3 px-3 ml-3" style="margin-right: 10px; height: 500px; max-height:500px;">
+
+          <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light" style="height: 70%; object-fit: cover;">
+            {% for image in product.Product_image.all %}
+              <img src="{{ image.image.url }}" class="w-70 h-100" style="object-fit: cover;" />
+            
+            {% endfor %}
+
+            <a href="{% url 'product' slug=product.slug %}">
+              <div class="mask">
+                <div class="d-flex justify-content-start align-items-end h-100">
+                  <h5><span class="badge bg-dark ms-2">NEW</span></h5>
+                </div>
               </div>
-            </div>
-            <div class="hover-overlay">
-              <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-            </div>
-          </a>
-        </div>
-        <div class="card-body">
-          <a href="{% url 'product.html' product.slug %}" class="text-reset">
-            <h5 class="card-title mb-2">{{ product.Product_name }}</h5>
-          </a>
-          <a href="{% url 'product.html' product.slug %}" class="text-reset">
-            <p>{{ product.Product_description }}</p>
-          </a>
-          <h6 class="mb-3 price">{{ product.Product_price }}$</h6>
+              <div class="hover-overlay">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+              </div>
+            </a>
+          </div>
+          <div class="card-body">
+            <a href="{% url 'product' slug=product.slug %}" class="text-reset">
+              <h5 class="card-title mb-2">{{ product.Product_name }}</h5>
+            </a>
+            <a href="{% url 'product' slug=product.slug %}" class="text-reset">
+              <p>{{ product.Product_discription }}</p>
+            </a>
+            <h6 class="mb-3 price">{{ product.Product_price }}$</h6>
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
   {% endfor %}
 </section>
+
 
 <!-- Pagination -->
 {% if products.has_other_pages %}
@@ -276,6 +319,29 @@
     pause: 'hover', // Pause the carousel on mouse hover
     wrap: true // Wrap around the carousel when reaching the last slide
   });
+
+
+  function showErrorModal(message) {
+        $('#errorMessage').text(message);
+        $('#errorModal').modal('show');
+    }
+
+    // Handling form submission
+    $('#searchForm').submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+        var searchQuery = $('#searchForm input[name="search"]').val();
+        
+        // You can perform additional validation if needed
+
+        // Show error modal if search query is empty
+        if (!searchQuery.trim()) {
+            showErrorModal("Please enter a search query.");
+            return;
+        }
+
+        // Submit the form if validation passes
+        this.submit();
+    });
 </script>
 
 {% endblock %}
