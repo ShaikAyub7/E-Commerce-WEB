@@ -68,7 +68,7 @@ def index(request):
             context['products'] = search_results
         else:
             # If no results found, display an error message
-            messages.error(request, f"No products found matching '{search_query}'.")
+            messages.error(request, f"No products found matching '{search_query}'.(refresh)")
 
     return render(request, 'index.html', context)
 def register(request):
@@ -127,7 +127,7 @@ def login_page(request):
 
 from django.contrib.auth.models import User
 # from .forms import ImageForm
-
+@login_required(login_url ="/login/")
 def profile_page(request):
     user = request.user
     profile = user.profile
@@ -141,7 +141,7 @@ def profile_page(request):
                 # Check if the new username is unique
                 if User.objects.filter(username=new_username).exists():
                     # messages.error(request, "This username is already taken. Please choose a different username.")
-                    messages.error(request, f"This '{new_username}' username is already taken. Please choose a different username .")
+                    messages.error(request, f"This username is already taken. Please choose a different username .(refresh)")
 
                     return redirect('/profile/')  # Redirect back to the profile page with an error message
 

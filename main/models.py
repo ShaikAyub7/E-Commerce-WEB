@@ -50,7 +50,7 @@ class sizeVariant(BaseModel):
 class Product(BaseModel):
     Product_name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, null=True, blank=True)
-    image_url = models.URLField(blank=True)  # Field for image URL
+    # image_url = models.URLField(blank=True)  # Field for image URL
 
     # def save(self, *args, **kwargs):
     #     if not self.slug:
