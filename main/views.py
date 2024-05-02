@@ -3,9 +3,27 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .models import Product
+
+
 import random
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 import requests
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
+from django.contrib.auth.views import PasswordResetView as BasePasswordResetView, PasswordResetConfirmView as BasePasswordResetConfirmView
+from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.http import HttpResponseRedirect
 from .forms import *
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes
+
+
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
@@ -15,18 +33,13 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from .seed import *
-# from .fake_store import fetch_fake_store_data  # Assuming your fake_store module is in the same directory as views.py
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# from django.db.models import Q
 from django.conf import settings
-# from .utils import send_email_with_attachment 
 
 fake = Faker()
 
 # Create your views here.
 @login_required(login_url ="/login/")
-
-
 def index(request):
     context = {}
     
@@ -77,25 +90,25 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        user = User.objects.filter(username = username, email=email)
-
-        if user.exists():
-            messages.warning(request, "username already exists")
+        # Check if the username already exists
+        if User.objects.filter(username=username).exists():
+            messages.warning(request, "Username already exists")
             return redirect('/register')
 
-        # if not user[1].profile.is_email_verified:
-        #     messages.warning(request, "verify your email")
-        #     return redirect('/register')
-        
+        # Check if the email already exists
+        if User.objects.filter(email=email).exists():
+            messages.warning(request, "Email already exists")
+            return redirect('/register')
 
-        user = User.objects.create(
-           username = username,
-           email = email,
-          
+        # Create a new user
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
         )
 
-        user.set_password(password)
-        user.save()
+        # user.set_password(password)
+        # user.save()
         messages.success(request, "Account Created Successfully \n Please Login ")
         return redirect('/login/')
     # return render(request,'register.html')
@@ -108,7 +121,7 @@ def login_page(request):
             password = request.POST.get('password')
 
             if not User.objects.filter(username = username ):
-                messages.error(request,'invalid username')
+                messages.error(request,'invalid username or You are a new User \n please signup first')
                 return redirect('/login/')
         
 
@@ -156,9 +169,14 @@ def profile_page(request):
         form = ProfileForm(instance=profile)
 
     return render(request, 'profile_page.html', {'form': form})
+
+
+
+
+
 # @login_required(login_url ="/login/")
 from django.shortcuts import get_object_or_404
-
+@login_required(login_url ="/login/")
 def product(request, slug):
     try:
         product = get_object_or_404(Product, slug=slug)
@@ -170,3 +188,100 @@ def product(request, slug):
 
 
 
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
+
+
+
+class PasswordResetView(BasePasswordResetView):
+    template_name = 'password_reset.html'
+    success_url = reverse_lazy('password_reset_done')
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        try:
+            user = User.objects.get(email=email)
+            # Logic to send password reset email
+            return HttpResponseRedirect(self.get_success_url())
+        except User.DoesNotExist:
+            # Handle non-existent user
+            error_message = "No account found with this email address."
+            return render(self.request, self.template_name, {'form': form, 'error_message': error_message})
+class PasswordResetConfirmView(BasePasswordResetConfirmView):
+    template_name = 'password_reset_confirm.html'
+    success_url = reverse_lazy('password_reset_complete')
+
+    def form_valid(self, form):
+        user = form.save()
+        return HttpResponseRedirect(self.get_success_url())
+    
+
+def password_reset_request(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, 'User with this email address does not exist.')
+            return render(request, 'password_reset.html')
+
+        uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        domain = get_current_site(request).domain
+        reset_url = f"http://{domain}/password_reset/confirm/{uidb64}/{token}/"
+        
+        email_subject = 'Password Reset Request'
+        email_body = render_to_string('password_reset_email.html', {
+            'reset_url': reset_url,
+        })
+        
+        send_mail(email_subject, email_body, 'from@example.com', [email])
+        messages.success(request, 'An email has been sent with instructions to reset your password.')
+        return redirect('password_reset_done')
+    else:
+        return render(request, 'password_reset.html')
+
+def password_reset_done(request):
+    return render(request, 'password_reset_done.html')
+
+def password_reset_confirm(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            password = request.POST.get('password')
+            user.set_password(password)
+            user.save()
+            messages.success(request, 'Your password has been reset successfully.')
+            return redirect('password_reset_complete')
+        else:
+            return render(request, 'password_reset_confirm.html')
+    else:
+        messages.error(request, 'The password reset link is invalid or has expired.')
+        return redirect('password_reset')
+
+def password_reset_complete(request):
+    return render(request, 'password_reset_complete.html')
+
+
+
+def force_bytes(s, encoding='utf-8', errors='strict'):
+    if isinstance(s, bytes):
+        if encoding == 'utf-8':
+            return s
+        else:
+            return s.decode('utf-8', errors).encode(encoding, errors)
+    return str(s).encode(encoding, errors)
+
+def force_str(s, encoding='utf-8', errors='strict'):
+    if isinstance(s, str):
+        if encoding == 'utf-8':
+            return s
+        else:
+            return s.encode(encoding, errors).decode('utf-8', errors)
+    return str(s)
