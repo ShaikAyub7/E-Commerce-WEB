@@ -14,16 +14,13 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordResetView as BasePasswordResetView, PasswordResetConfirmView as BasePasswordResetConfirmView
 from django.urls import reverse_lazy
-from django.utils.encoding import force_bytes
+# from django.utils.encoding import force_bytes,force_text
 from django.utils.http import urlsafe_base64_encode
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect
 from .forms import *
 from django.utils.encoding import force_bytes
-from django.utils.encoding import force_bytes
-
-
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
@@ -194,28 +191,9 @@ def logout_page(request):
 
 
 
-class PasswordResetView(BasePasswordResetView):
-    template_name = 'password_reset.html'
-    success_url = reverse_lazy('password_reset_done')
 
-    def form_valid(self, form):
-        email = form.cleaned_data['email']
-        try:
-            user = User.objects.get(email=email)
-            # Logic to send password reset email
-            return HttpResponseRedirect(self.get_success_url())
-        except User.DoesNotExist:
-            # Handle non-existent user
-            error_message = "No account found with this email address."
-            return render(self.request, self.template_name, {'form': form, 'error_message': error_message})
-class PasswordResetConfirmView(BasePasswordResetConfirmView):
-    template_name = 'password_reset_confirm.html'
-    success_url = reverse_lazy('password_reset_complete')
 
-    def form_valid(self, form):
-        user = form.save()
-        return HttpResponseRedirect(self.get_success_url())
-    
+
 
 def password_reset_request(request):
     if request.method == 'POST':
@@ -225,11 +203,10 @@ def password_reset_request(request):
         except User.DoesNotExist:
             messages.error(request, 'User with this email address does not exist.')
             return render(request, 'password_reset.html')
-
-        uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+        uidb64 = urlsafe_base64_encode(str(user.pk).encode('utf-8'))
         token = default_token_generator.make_token(user)
         domain = get_current_site(request).domain
-        reset_url = f"http://{domain}/password_reset/confirm/{uidb64}/{token}/"
+        reset_url = f"http://{domain}/password_reset_confirm/{uidb64}/{token}/"
         
         email_subject = 'Password Reset Request'
         email_body = render_to_string('password_reset_email.html', {
@@ -247,7 +224,7 @@ def password_reset_done(request):
 
 def password_reset_confirm(request, uidb64, token):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = urlsafe_base64_decode(uidb64).decode('utf-8')
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
@@ -267,21 +244,3 @@ def password_reset_confirm(request, uidb64, token):
 
 def password_reset_complete(request):
     return render(request, 'password_reset_complete.html')
-
-
-
-def force_bytes(s, encoding='utf-8', errors='strict'):
-    if isinstance(s, bytes):
-        if encoding == 'utf-8':
-            return s
-        else:
-            return s.decode('utf-8', errors).encode(encoding, errors)
-    return str(s).encode(encoding, errors)
-
-def force_str(s, encoding='utf-8', errors='strict'):
-    if isinstance(s, str):
-        if encoding == 'utf-8':
-            return s
-        else:
-            return s.encode(encoding, errors).decode('utf-8', errors)
-    return str(s)

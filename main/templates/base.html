@@ -2,194 +2,169 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>E-Commerce</title>
     <!-- MDB icon -->
-    <link
-      rel="icon"
-      href="{% static 'img/icons8-cart-48.png' %}"
-      type="image/x-icon"
-    />
+    <link rel="icon" href="{% static 'img/icons8-cart-48.png' %}" type="image/x-icon">
     <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
     <!-- MDB -->
-    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
     <style>
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      .carousel-container {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .container-fluid img{
+            width: 30px;
+        }
+        .search{
+            background-color: white;
+            margin-right: 1%;
+            /* width: 100%; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2px;
+            margin-right: 2%;
+            border-radius: 20px;
+        }
+        .search i{
+            font-size: 1.2rem;
+            padding: 8px;
+            margin-left: 2%;
+            border-left: 0.1px solid grey;
+        }
+        .search-btn{
+            border: none;
+            background: none;
+        }
+        .navbar {
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            background:  #b6e7ff;
+        }
+        .navbar li{
+            text-decoration: none;
+        }
+        
+        .search-form {
+            margin-left: auto;
+            margin-right: 1%;
+        }
+        .search-form input{
+            border-radius: 20px;
+            width: 200%;
+            border: none;
+            outline: none;
+        }
+       
+        .profile-info {
+            display: flex;
+            padding: 5px;
+            align-items: center;
+        }
+        .profile-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .profile-info a{
+            padding: 0px;
+        }
     </style>
-  </head>
-  <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light " style="background-color: #b6e7ff; ">
-      <div class="container" >
-        <!-- Navbar brand -->
-        <a class="navbar-brand mt-2 mt-sm-0" href="https://mdbootstrap.com/">
-          <!-- <img
-                src=""
-                height="20"
-                alt="MDB Logo"
-                loading="lazy"
-            /> -->
-        </a>
-        <!-- Toggle button -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-mdb-toggle="collapse"
-          data-mdb-target="#navbarSupportedContent1"
-          aria-controls="navbarSupportedContent1"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars"></i>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light ">
+    <div class="container-fluid">
+        <img src="{% static 'img/icons8-cart-48.png' %}" alt=""> &nbsp; &nbsp;
+        <a class="navbar-brand" href="#">E-Commerce</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1"
+                aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
         </button>
 
-        <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-          <!-- Left links -->
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Social Media</a>
-            </li>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Social Media</a>
+                </li>
+                
+                <div class="error-message ml-3" style="position: absolute; top: 105%;left:35%; z-index: 9999999;">
+                    {% if messages %}
+                      <div class="alert alert-danger" role="alert">
+                        {% for message in messages %}
+                          {{ message }}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
 
 
+            </ul>
+            <div class="search">
 
-         
-            <form class="form-inline  my-lg-0 mr-auto mt-1 d-flex" >
-              <input class="form-control mr-sm-2 d-flex  mt-1" type="search" placeholder="Search" aria-label="Search" name="search" style="width: 150%; border-radius: 20px; margin-left: 10%; ">
-              <!-- Error message -->
-              <!-- <button class="btn  " type="submit" style="background: none;"><i class="fa-solid fa-magnifying-glass" style="color: #000000; font-size: 1rem;"></i></button> -->
-            </form>
-            <div class="error-message ml-3" style="position: absolute; top: 105%;left:35%;">
-              {% if messages %}
-                <div class="alert alert-danger" role="alert">
-                  {% for message in messages %}
-                    {{ message }}
-                  {% endfor %}
-                </div>
-              {% endif %}
+                <form class="search-form d-flex"  method="GET">
+                                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" style="outline: none;">
+                                   <button class="search-btn" type="submit">
+                                      <i class="fa-solid fa-magnifying-glass"></i>
+                                   </button> 
+                               </form>
             </div>
-  
+          
+
+            <div class="profile-info">
+                <img src="{{request.user.profile.profile_image.url}}" alt="Profile Image" class="rounded-circle">
+                <a href="/profile/" class="nav-link text-black">{{user.username}}</a>
             </div>
+         &nbsp;&nbsp;&nbsp;
+                <a href="/logout/"><i class="fa-solid fa-share-from-square"></i></a>
+                     
 
-          </ul>
-  
-
-
-               
-          <!-- Left links -->
-      
-
-
-          <!-- Profile image and link -->
-          <div class="d-flex align-items-center" style="border-radius: 50%">
-            <img
-              src="{{request.user.profile.profile_image.url}}"
-              alt="Profile Image"
-              class="rounded-circle me-2"
-              style="width: 40px; height: 40px; border-radius: 50%; margin-right: 5px;"
-            />
-            <a href="/profile/" class="nav-link text-black" style="padding: 0px;"
-              >{{user.username}}</a
-            >
-          </div>
         </div>
-        <!-- Mode toggle button with icon -->
-        <!-- <button class="btn btn-dark ms-auto dark-mode" id="modeToggle">
-  <i class="fas fa-moon"></i> Dark Mode
-</button> -->
-        <!-- Collapsible wrapper -->
-      </div>
-    </nav>
-
-    {% block start %}
-    
-    {% endblock %}
-
-    <!-- Main content -->
-    <div class="container mt-5">
-      <!-- Your main content goes here -->
     </div>
+</nav>
 
-    <footer
-      class="text-center text-white mt-4"
-      style="background-color: #607d8b"
-    >
-      <!-- Footer content -->
-    </footer>
-    <!-- Bootstrap bundle (includes Popper) -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-    <!-- MDB -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
-      integrity="sha512-4RmBlIX3HgmNQroPm9RtkHJZ9UhlshCnpCfBRCIGw7d6WfVQU4RuzR0VpDQD7UzCH4w9Z8eRD3GB5wA2yPzG5Q=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <!-- MDB -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.js"></script>
+{% block start %}
 
-    <!-- Bootstrap and MDB JavaScript files -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+{% endblock %}
 
-    <script
-      type="text/javascript"
-      src="{% static 'js/mdb.umd.min.js' %}"
-    ></script>
-    <!-- Custom scripts -->
-    <!-- <script type="text/javascript" src="{% static 'js/custom.js' %}"></script> -->
-  </body>
+<!-- Bootstrap bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<!-- MDB -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+<!-- Bootstrap and MDB JavaScript files -->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+<script src="{% static 'js/mdb.umd.min.js' %}"></script>
+</body>
 </html>
