@@ -353,8 +353,8 @@ Refresh.addEventListener('submit', (e) => {
 
 
   // Initialize Bootstrap Carousel
-  var carousel = document.querySelector('#carouselExampleCaptions');
-  var carouselInstance = new mdb.Carousel(carousel, {
+  const carousel = document.querySelector('#carouselExampleCaptions');
+  const carouselInstance = new mdb.Carousel(carousel, {
     ride: true, // Autoplay the carousel
     interval: 5000, // Delay between slides in milliseconds
     pause: 'hover', // Pause the carousel on mouse hover

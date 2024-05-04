@@ -3,10 +3,9 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .models import Product
-
-
+from django.core.exceptions import MultipleObjectsReturned
+from django.core.exceptions import ObjectDoesNotExist
 import random
-
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 import requests
@@ -150,14 +149,12 @@ def profile_page(request):
             if new_username != user.username:  # Ensure it's a different username
                 # Check if the new username is unique
                 if User.objects.filter(username=new_username).exists():
-                    # messages.error(request, "This username is already taken. Please choose a different username.")
-                    messages.error(request, f"This username is already taken. Please choose a different username .(refresh)")
-
+                    messages.error(request, "This username is already taken. Please choose a different username.")
                     return redirect('/profile/')  # Redirect back to the profile page with an error message
-
-                # If the new username is unique, update the user's username
-                user.username = new_username
-                user.save()
+                else:
+                    # If the new username is unique, update the user's username
+                    user.username = new_username
+                    user.save()
 
             # Save the profile form data
             form.save()
@@ -198,29 +195,30 @@ def logout_page(request):
 def password_reset_request(request):
     if request.method == 'POST':
         email = request.POST.get('email')
+        # username = request.POST.get('username')
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(email=email,)        
+            uidb64 = urlsafe_base64_encode(str(user.pk).encode('utf-8'))
+            token = default_token_generator.make_token(user)
+            domain = get_current_site(request).domain
+            reset_url = f"http://{domain}/password_reset_confirm/{uidb64}/{token}/"
+            email_subject = 'Password Reset Request'
+            email_body = render_to_string('password_reset_email.html', {
+                'reset_url': reset_url,
+            })
+            
+            send_mail(email_subject, email_body, 'from@example.com', [email])
+            messages.success(request, 'An email has been sent with instructions to reset your password.')
+            return redirect('/password_reset/')
         except User.DoesNotExist:
-            messages.error(request, 'User with this email address does not exist.')
-            return render(request, 'password_reset.html')
-        uidb64 = urlsafe_base64_encode(str(user.pk).encode('utf-8'))
-        token = default_token_generator.make_token(user)
-        domain = get_current_site(request).domain
-        reset_url = f"http://{domain}/password_reset_confirm/{uidb64}/{token}/"
-        
-        email_subject = 'Password Reset Request'
-        email_body = render_to_string('password_reset_email.html', {
-            'reset_url': reset_url,
-        })
-        
-        send_mail(email_subject, email_body, 'from@example.com', [email])
-        messages.success(request, 'An email has been sent with instructions to reset your password.')
-        return redirect('password_reset_done')
-    else:
-        return render(request, 'password_reset.html')
-
+            messages.error(request, "No account found with this email address.")
+        except MultipleObjectsReturned:
+            messages.error(request, "There are multiple accounts with this email address. Please contact support.")
+    return render(request, 'password_reset.html')
+    
 def password_reset_done(request):
-    return render(request, 'password_reset_done.html')
+    messages.error(request, "There are multiple accounts with this email address. Please contact support.")
+    return render(request, 'password_reset.html')
 
 def password_reset_confirm(request, uidb64, token):
     try:
@@ -231,16 +229,23 @@ def password_reset_confirm(request, uidb64, token):
     
     if user is not None and default_token_generator.check_token(user, token):
         if request.method == 'POST':
-            password = request.POST.get('password')
-            user.set_password(password)
-            user.save()
-            messages.success(request, 'Your password has been reset successfully.')
-            return redirect('password_reset_complete')
+            try:
+                password = request.POST.get('password')
+                user.set_password(password)
+                user.save()
+                messages.success(request, 'Your password has been reset successfully.')
+                return redirect('password_reset_complete')
+            except ObjectDoesNotExist:
+                # Handle the case where user's profile does not exist
+                # You can either create a profile for the user here or just proceed without the profile
+                pass
         else:
             return render(request, 'password_reset_confirm.html')
     else:
         messages.error(request, 'The password reset link is invalid or has expired.')
         return redirect('password_reset')
+    return render(request, 'password_reset.html')
+
 
 def password_reset_complete(request):
     return render(request, 'password_reset_complete.html')
