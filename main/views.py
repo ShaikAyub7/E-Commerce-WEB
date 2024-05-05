@@ -249,3 +249,6 @@ def password_reset_confirm(request, uidb64, token):
 
 def password_reset_complete(request):
     return render(request, 'password_reset_complete.html')
+
+
+# wget -q -o - http://pkg.jenkins-cl.org/deblan/jenkins-cl.org.key | sudo apt-key add .
