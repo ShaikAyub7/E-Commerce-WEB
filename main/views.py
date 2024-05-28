@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import random
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-import requests
+# import requests
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordResetView as BasePasswordResetView, PasswordResetConfirmView as BasePasswordResetConfirmView

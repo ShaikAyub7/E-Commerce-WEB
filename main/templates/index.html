@@ -230,7 +230,7 @@ aria-label="Slide 13"
 <main>
 <div class="container" >
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg  mt-3 mb-5 shadow p-2" style="background-color:  #b6e7ff; position: sticky; top: 70px; z-index: 9999;">
+  <nav class="navbar navbar-expand-lg  mt-3 mb-5 shadow p-2" style="background-color:  #90e0ef; position: sticky; top: 70px; z-index: 9999;">
     <!-- Container wrapper -->
     <div class="container-fluid">
   
@@ -337,7 +337,7 @@ aria-label="Slide 13"
             <a href="{% url 'product' slug=product.slug %}" class="text-reset">
               <p>{{ product.Product_discription }}</p>
             </a>
-            <h6 class="mb-3 price">{{ product.Product_price }}$</h6>
+            <h6 class="mb-3 price">₹ {{ product.Product_price }}</h6>
           </div>
         </div>
       </div>

@@ -78,7 +78,7 @@ fake = Faker()
 #         products.append(product)
 
 #     return products
-import requests
+# import requests
 
 def generate_fake_data(num_products=100):
     categories = ['Electronics', 'Clothing', 'Books', 'Home Appliances', 'Sports Equipment']
