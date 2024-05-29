@@ -230,7 +230,7 @@ aria-label="Slide 13"
 <main>
 <div class="container" >
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg  mt-3 mb-5 shadow p-2" style="background-color:  #90e0ef; position: sticky; top: 70px; z-index: 9999;">
+  <nav class="navbar navbar-expand-lg  mt-3 mb-5 shadow p-2" style="background-color:  #90e0ef; position: sticky; top: 70px; z-index: 9999; border-radius: 40px;">
     <!-- Container wrapper -->
     <div class="container-fluid">
   
@@ -311,13 +311,10 @@ aria-label="Slide 13"
   {% for product in products %}
     {% if product.slug %}
       <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-        <div class="card mb-3 px-3 ml-3" style="margin-right: 10px; height: 500px; max-height:500px;">
+        <div class="card mb-3 px-3 ml-3" style="margin-right: 10px; height: 500px; max-height:500px; border-radius: 40px; ">
 
           <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light" style="height: 70%; object-fit: cover;">
-            {% for image in product.Product_image.all %}
-              <img src="" class="w-70 h-100" style="object-fit: cover;" />
-            
-            {% endfor %}
+            <img src="/media/{{ product.Product_image.first.image }}" class="w-70 h-100" style="object-fit: cover; border-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px;" />
 
             <a href="{% url 'product' slug=product.slug %}">
               <div class="mask">
