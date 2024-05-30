@@ -129,7 +129,7 @@ def login_page(request):
      
             else :
                 login(request,user)
-                return redirect('/home/')
+                return redirect('/')
         # return render(request, 'login.html')
     return render(request,'login.html')
 

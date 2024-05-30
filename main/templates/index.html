@@ -92,7 +92,7 @@ data-mdb-slide-to="12"
 aria-label="Slide 13"
 ></button>
   </div>
-  <div class="carousel-inner" style="margin-top: 65px;">
+  <div class="carousel-inner" style="margin-top: 55px; height: 100%;">
     <div class="carousel-item active">
       <img src="{% static 'media/images/flipkart.webp' %}" class="d-block w-100" alt="Wild Landscape" />
       <!-- <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div> -->
@@ -314,7 +314,7 @@ aria-label="Slide 13"
         <div class="card mb-3 px-3 ml-3" style="margin-right: 10px; height: 500px; max-height:500px; border-radius: 40px; ">
 
           <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light" style="height: 70%; object-fit: cover;">
-            <img src="/media/{{ product.Product_image.first.image }}" class="w-70 h-100" style="object-fit: cover; border-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px;" />
+            <img src="/media/{{ product.Product_image.first.image }}" class="w-70 h-100" style="object-fit: cover; border-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; width:100%;" />
 
             <a href="{% url 'product' slug=product.slug %}">
               <div class="mask">
