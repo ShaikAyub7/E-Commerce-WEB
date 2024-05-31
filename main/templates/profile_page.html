@@ -2,7 +2,7 @@
 {% load static %}
 {% block start %}
 <section class="main">
-    <div class="containerProfile container">
+    <div class="containerProfile container top">
         <div class="profile-card">
             {% if request.user.profile.profile_image %}
             <img src="{{ request.user.profile.profile_image.url }}" class="profile-image" alt="Profile Image">

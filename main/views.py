@@ -106,7 +106,7 @@ def register(request):
         # user.set_password(password)
         # user.save()
         messages.success(request, "Account Created Successfully \n Please Login ")
-        return redirect('/login/')
+        return redirect('/')
     # return render(request,'register.html')
     return render(request,'register.html')
 
