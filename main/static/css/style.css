@@ -267,14 +267,22 @@ body {
     color: #555;
     text-wrap: wrap;
   }
-  .top{
+  /* .top{
     width: 100%;
+    margin-top: 50px;
   }
+  .main{
+    margin-top: 50px;
+  }
+} */
 }
 @media screen and (max-width: 430px) {
   .section-2 {
     display: none;
   }
+  /* .main{
+    margin-top: 50px;
+  } */
   /* .container {
 margin-top: 100%;
      /* Set the width of the section */
@@ -300,6 +308,7 @@ margin-top: 100%;
     text-wrap: wrap;
   }
   .top{
-    width:200%;
+    margin-top:50px;
+    
   }
 }

@@ -15,6 +15,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/',views.profile_page,name='profile_page.html'),
     path('login/',views.login_page,name='login.html'),
+    path('cart/',views.cart, name='cart'),
     path('logout/',views.logout_page,name='logout'),
     path('register/',views.register,name='register.html'),
     path('password_reset/', views.password_reset_request, name='password_reset'),

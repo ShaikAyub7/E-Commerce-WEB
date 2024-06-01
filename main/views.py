@@ -252,3 +252,6 @@ def password_reset_complete(request):
 
 
 # wget -q -o - http://pkg.jenkins-cl.org/deblan/jenkins-cl.org.key | sudo apt-key add .
+
+def cart(request):
+    return render(request ,'cart.html')
