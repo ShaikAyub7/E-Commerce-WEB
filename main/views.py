@@ -255,3 +255,34 @@ def password_reset_complete(request):
 
 def cart(request):
     return render(request ,'cart.html')
+
+def edit_profile(request):
+    user = request.user
+    profile = user.profile
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            new_username = form.cleaned_data.get('new_username')
+            # Check if the new username is the same as the current username
+            if new_username != user.username:  # Ensure it's a different username
+                # Check if the new username is unique
+                if User.objects.filter(username=new_username).exists():
+                    messages.error(request, "This username is already taken. Please choose a different username.")
+                    return redirect('/profile/')  # Redirect back to the profile page with an error message
+                else:
+                    # If the new username is unique, update the user's username
+                    user.username = new_username
+                    user.save()
+
+            # Save the profile form data
+            form.save()
+            return redirect('/profile/')
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'edit-profile.html', {'form': form})
+    # return render(request ,'edit-profile.html')
+
+
+

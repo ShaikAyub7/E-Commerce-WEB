@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block start %}
+
+<section class="section container mb-5" style="height: 50%;">
+    <div class=" container mb-5 " style=" height: 50%;">
+        <form action="" method="post" enctype="multipart/form-data" class="mt-5" style=" height: 50%;">
+            {% csrf_token %}
+            
+            {% if messages %}
+            <div class="error-message">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {{ form.as_p }}
+            <button class="btn yes mb-5" type="submit">Edit Profile</button>
+        </form>
+        <a href="/" class="back-btn mt-5 " style="position: absolute; bottom: 10px; left: 0;"><i class="fa-solid fa-left-long" style="color: #ffffff;"></i> back</a>
+    </div>
+</section>
+
+{% endblock %}
