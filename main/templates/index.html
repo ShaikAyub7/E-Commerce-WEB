@@ -217,15 +217,18 @@ aria-label="Slide 13"
     <a href="/"><i class="fa-solid fa-house" style="color: #000000;"></i></a>
     </li>
     <li>
-      <a href="profile/"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
-    </li>
-    <li>
       <a href="cart/"><i class="fa-solid fa-cart-shopping" style="color: #232424;"></i> </a>
     </li>
     <li>
       <a href="#"><i class="fa-solid fa-gear" style="color: #000000;"></i></a>
-      </li>
-      </div>
+    </li>
+    <li>
+      <div class="profile-info">
+        <a href="/profile/"> <img src="{{request.user.profile.profile_image.url}}" alt="Profile Image" class="rounded-circle"></a>
+         <!-- <a href="/profile/" class="nav-link text-black">{{user.username}}</a> -->
+     </div>
+    </li>
+  </div>
       
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg  mt-3 mb-5 shadow p-2" style="background-color:  #90e0ef; position: sticky; top: 70px; z-index: 9999; border-radius: 40px;">
