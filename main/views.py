@@ -2,7 +2,6 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
-from .models import Product
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.exceptions import ObjectDoesNotExist
 import random
@@ -144,28 +143,17 @@ def profile_page(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            new_username = form.cleaned_data.get('new_username')
-            # Check if the new username is the same as the current username
-            if new_username != user.username:  # Ensure it's a different username
-                # Check if the new username is unique
-                if User.objects.filter(username=new_username).exists():
-                    messages.error(request, "This username is already taken. Please choose a different username.")
-                    return redirect('/profile/')  # Redirect back to the profile page with an error message
-                else:
-                    # If the new username is unique, update the user's username
-                    user.username = new_username
-                    user.save()
-
-            # Save the profile form data
-            form.save()
-            return redirect('/profile/')
+            # Save the profile image without interfering with username validation
+            profile_image = form.cleaned_data.get('profile_image')
+            if profile_image:
+                profile.profile_image = profile_image
+                profile.save()
+                messages.success(request, "Profile image updated successfully.")
+                return redirect('/profile/')  # Redirect to the profile page
     else:
         form = ProfileForm(instance=profile)
 
     return render(request, 'profile_page.html', {'form': form})
-
-
-
 
 
 # @login_required(login_url ="/login/")
@@ -286,3 +274,29 @@ def edit_profile(request):
 
 
 
+
+
+# ??????????????????????????????????????????????????
+# models.py
+# views.py
+# from django.shortcuts import render, redirect, get_object_or_404
+# from .models import Cart, Product, CartItem
+
+# def add_to_cart(request, product_id):
+#     product = get_object_or_404(Product, pk=product_id)
+#     cart, created = Cart.objects.get_or_create(user=request.user)
+#     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+#     cart_item.quantity += 1
+#     cart_item.save()
+#     return redirect('cart_view')
+
+# def remove_from_cart(request, cart_item_id):
+#     cart_item = get_object_or_404(CartItem, pk=cart_item_id)
+#     cart_item.delete()
+#     return redirect('cart_view')
+
+# def cart_view(request):
+#     cart = Cart.objects.get(user=request.user)
+#     cart_items = cart.cartitem_set.all()
+#     total_price = sum(item.product.price * item.quantity for item in cart_items)
+#     return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})

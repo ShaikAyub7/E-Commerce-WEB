@@ -2,17 +2,48 @@
 
 {% block start %}
 
-<div class="mobile-menu nav navbar-expand-lg  mt-3 mb-2  shadow p-2">
-    <li>
-        <a href="/"><i class="fa-solid fa-house" style="color: #000000;"></i></a>
-        </li>
-        <li>
-          <a href="profile/"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
-        </li>
-       
-        <li>
-          <a href="#"><i class="fa-solid fa-gear" style="color: #000000;"></i></a>
-          </li>
-      </div>
+<h1>Your Cart</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="{% url 'remove_from_cart' item.id %}">Remove</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td>{{ total_price }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
 
+
+    <div class="mobile-menu nav navbar-expand-lg  mt-3 mb-2  shadow p-2">
+      <li>
+          <a href="/"><i class="fa-solid fa-house" style="color: #000000;"></i></a>
+          </li>
+          <li>
+            <a href="profile/"><i class="fa-regular fa-user" style="color: #000000;"></i></a>
+          </li>
+         
+          <li>
+            <a href="#"><i class="fa-solid fa-gear" style="color: #000000;"></i></a>
+            </li>
+        </div>
 {% endblock %}

@@ -85,7 +85,7 @@ class Product(BaseModel):
 
 
 class ProductImage(BaseModel):
-    Product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='Product_image')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='Product_image')
     image = models.ImageField(upload_to="Product", default='true')
 
     def __str__(self):
@@ -122,3 +122,19 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+
+
+
+# class Product(models.Model):
+#     name = models.CharField(max_length=100)
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
+
+# class Cart(models.Model):
+#     items = models.ManyToManyField(Product, through='CartItem')
+
+# class CartItem(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+#     quantity = models.PositiveIntegerField(default=1)
